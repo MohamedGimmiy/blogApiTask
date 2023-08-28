@@ -6,6 +6,7 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -101,5 +102,14 @@ class PostController extends Controller
                 'error' => 'post not found'.$e->getMessage(),
             ],404);
         }
+    }
+
+    public function count(){
+        $count = Post::select(DB::raw('COUNT(*)  posts_number'),'users.email')
+        ->join('users','users.id','=','posts.user_id')
+        ->groupBy('users.email')->get();
+        return response()->json([
+            'count' => $count
+        ]);
     }
 }

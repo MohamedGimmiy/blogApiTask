@@ -24,6 +24,7 @@ Route::apiResource('/posts', PostController::class)->except(['store','destory','
 
 Route::post('/login',[RegisterController::class, 'login']);
 Route::post('/register',[RegisterController::class, 'register']);
+Route::get('/count', [PostController::class, 'count']);
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::post('/posts', [PostController::class, 'store']);
